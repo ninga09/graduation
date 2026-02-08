@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graduation Application | KISE College</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Playfair+Display:ital,wght@0,700;1,700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="background-decor"></div>
+    <main class="container">
+        <a href="index.html" class="back-btn">← Back to Requirements</a>
+        <header class="form-header">
+            <div class="logo">
+                <!-- Replace with actual logo URL if available -->
+                <span class="college-initials">KISE</span>
+            </div>
+            <h1>Graduation Application Form</h1>
+            <p>Congratulations on reaching this milestone. Please provide your details accurately.</p>
+        </header>
+
+        <form id="graduationForm" action="submit.php" method="POST" enctype="multipart/form-data" class="premium-form">
+            <div class="form-section">
+                <h2><span class="section-num">01</span> Personal Information</h2>
+                <div class="input-grid">
+                    <div class="input-group">
+                        <label for="admissionNumber">Admission Number</label>
+                        <input type="text" id="admissionNumber" name="admissionNumber" required
+                            placeholder="e.g., 2025-06">
+                        <small class="hint">Registered? Type and press Tab to fetch details</small>
+                    </div>
+                </div>
+                <div class="input-grid">
+                    <div class="input-group">
+                        <label for="firstName">First Name</label>
+                        <input type="text" id="firstName" name="firstName" required placeholder="e.g., John">
+                    </div>
+                    <div class="input-group">
+                        <label for="middleName">Middle Name</label>
+                        <input type="text" id="middleName" name="middleName" placeholder="Optional">
+                    </div>
+                    <div class="input-group">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" id="lastName" name="lastName" required placeholder="e.g., Kamau">
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="email">Institutional Email</label>
+                    <input type="email" id="email" name="email" required placeholder="e.g., student@kisecollege.ac.ke">
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2><span class="section-num">02</span> Academic Details</h2>
+                <div class="input-grid">
+                    <div class="input-group">
+                        <label for="graduationYear">Expected Graduation Year</label>
+                        <select id="graduationYear" name="graduationYear" required>
+                            <option value="" disabled selected>Select Year</option>
+                            <option value="2025">2025</option>
+                            <option value="2026">2026</option>
+                            <option value="2027">2027</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="course">Course of Study</label>
+                        <input type="text" id="course" name="course" required
+                            placeholder="e.g., Diploma in Special Needs Education">
+                    </div>
+                    <div class="input-group">
+                        <label for="certificateLevel">Level of Certificate</label>
+                        <select id="certificateLevel" name="certificateLevel" required>
+                            <option value="" disabled selected>Select Level</option>
+                            <option value="Degree">Degree</option>
+                            <option value="Diploma">Diploma</option>
+                            <option value="Certificate">Certificate</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2><span class="section-num">03</span> Payment Verification</h2>
+                <div class="input-group">
+                    <label>Have you paid the graduation fee?</label>
+                    <div class="radio-group-container">
+                        <label class="radio-card">
+                            <input type="radio" name="paymentStatus" value="paid" required>
+                            <div class="radio-content">
+                                <span class="radio-label">Yes, I have paid</span>
+                            </div>
+                        </label>
+                        <label class="radio-card">
+                            <input type="radio" name="paymentStatus" value="not_paid" required>
+                            <div class="radio-content">
+                                <span class="radio-label">No, not yet</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div id="receiptSection" class="conditional-section" style="display: none;">
+                    <p class="section-hint">Please upload a scan or clear photo of your graduation fee payment receipt
+                        (PDF, JPG, or PNG).</p>
+                    <div class="input-group">
+                        <label for="paymentReceipt">Upload Payment Receipt</label>
+                        <div class="file-upload-wrapper">
+                            <input type="file" id="paymentReceipt" name="paymentReceipt" accept=".pdf,.jpg,.jpeg,.png">
+                            <div class="file-upload-display">
+                                <i class="upload-icon">↑</i>
+                                <span>Choose a file or drag it here</span>
+                            </div>
+                            <div id="filePreview" class="file-preview-container" style="display: none;">
+                                <img id="previewImage" src="" alt="Receipt Preview">
+                                <div id="pdfIcon" class="pdf-preview-icon" style="display: none;">📄 PDF Ready</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-group checkbox-group">
+                    <input type="checkbox" id="confirmPayment" name="confirmPayment" required>
+                    <label for="confirmPayment">I confirm that all information provided is accurate.</label>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn">
+                Submit Application
+                <span class="btn-shine"></span>
+            </button>
+        </form>
+
+        <footer class="form-footer">
+            <p>&copy; 2026 KISE College. All rights reserved.</p>
+        </footer>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
