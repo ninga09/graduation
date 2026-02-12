@@ -21,6 +21,8 @@ CREATE TABLE IF NOT EXISTS graduation_applications (
     certificate_level ENUM('Degree', 'Diploma', 'Certificate') NOT NULL,
     payment_status ENUM('paid', 'not_paid') DEFAULT 'not_paid',
     receipt_path VARCHAR(255),
+    num_attendees INT DEFAULT 1,
+    attendance_mode ENUM('Physical', 'Online') DEFAULT 'Physical',
     submission_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

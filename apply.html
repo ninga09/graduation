@@ -11,6 +11,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Playfair+Display:ital,wght@0,700;1,700&display=swap"
         rel="stylesheet">
+    <link rel="icon" type="image/gif" href="kiselogo.gif">
 </head>
 
 <body>
@@ -18,10 +19,6 @@
     <main class="container">
         <a href="index.html" class="back-btn">← Back to Requirements</a>
         <header class="form-header">
-            <div class="logo">
-                <!-- Replace with actual logo URL if available -->
-                <span class="college-initials">KISE</span>
-            </div>
             <h1>Graduation Application Form</h1>
             <p>Congratulations on reaching this milestone. Please provide your details accurately.</p>
         </header>
@@ -30,11 +27,25 @@
             <div class="form-section">
                 <h2><span class="section-num">01</span> Personal Information</h2>
                 <div class="input-grid">
+                    <div class="input-group" style="grid-column: 1 / -1;">
+                        <label>Search your Details By:</label>
+                        <div class="radio-group-container" style="justify-content: flex-start; gap: 20px;">
+                            <label class="radio-card" style="padding: 10px 20px; min-width: auto;">
+                                <input type="radio" name="searchType" value="adm" checked>
+                                <div class="radio-content"><span class="radio-label">Admission No.</span></div>
+                            </label>
+                            <label class="radio-card" style="padding: 10px 20px; min-width: auto;">
+                                <input type="radio" name="searchType" value="name">
+                                <div class="radio-content"><span class="radio-label">Student Name</span></div>
+                            </label>
+                        </div>
+                    </div>
                     <div class="input-group">
-                        <label for="admissionNumber">Admission Number</label>
+                        <label for="admissionNumber" id="searchLabel">Admission Number</label>
                         <input type="text" id="admissionNumber" name="admissionNumber" required
                             placeholder="e.g., 2025-06">
-                        <small class="hint">Registered? Type and press Tab to fetch details</small>
+                        <small class="hint">Type and press Tab/Enter to search</small>
+                        <div id="searchResults" class="search-results-list" style="display:none;"></div>
                     </div>
                 </div>
                 <div class="input-grid">
@@ -51,9 +62,21 @@
                         <input type="text" id="lastName" name="lastName" required placeholder="e.g., Kamau">
                     </div>
                 </div>
+                <div class="input-grid">
+                    <div class="input-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required placeholder="e.g., student@gmail.com">
+                    </div>
+                    <div class="input-group">
+                        <label for="studentPhone">Student Phone Number</label>
+                        <input type="text" id="studentPhone" name="studentPhone" required
+                            placeholder="e.g., 0712345678">
+                    </div>
+                </div>
                 <div class="input-group">
-                    <label for="email">Institutional Email</label>
-                    <input type="email" id="email" name="email" required placeholder="e.g., student@kisecollege.ac.ke">
+                    <label for="guardianContact">Guardian/Parent Contact (Phone/Email)</label>
+                    <input type="text" id="guardianContact" name="guardianContact" required
+                        placeholder="e.g., 0712345678">
                 </div>
             </div>
 
@@ -81,13 +104,56 @@
                             <option value="Degree">Degree</option>
                             <option value="Diploma">Diploma</option>
                             <option value="Certificate">Certificate</option>
+                            <option value="short-courses">short-courses</option>
+                            <option value="INES">INES</option>
                         </select>
                     </div>
                 </div>
             </div>
 
             <div class="form-section">
-                <h2><span class="section-num">03</span> Payment Verification</h2>
+                <h2><span class="section-num">03</span> Attendance Details</h2>
+
+                <div class="input-group">
+                    <label for="attendanceMode">How will you attend the ceremony?</label>
+                    <select id="attendanceMode" name="attendanceMode" required>
+                        <option value="Physical" selected>🏛️ Physical Attendance</option>
+                        <option value="Online">💻 Online Attendance</option>
+                        <option value="In Absentia">🚫 Won't Attend (In Absentia)</option>
+                    </select>
+                </div>
+
+                <div id="attendanceReasonSection" class="conditional-section" style="display: none;">
+                    <div class="input-group">
+                        <label for="attendanceReason">Reason for Online/Non-Attendance</label>
+                        <textarea id="attendanceReason" name="attendanceReason" rows="6"
+                            placeholder="Please explain in detail why you cannot attend physically..."></textarea>
+                    </div>
+                </div>
+
+                <div class="input-group" id="attendeesInputGroup">
+                    <label for="numAttendees">Number of Attendees (Guests)</label>
+                    <input type="number" id="numAttendees" name="numAttendees" min="0" max="100" value="0" required>
+                    <small class="hint">How many guests will accompany you? (excluding yourself)</small>
+                </div>
+
+                <div id="guestListSection" class="conditional-section" style="display: none;">
+                    <div class="input-group">
+                        <label for="guestList">Upload Guest List (Name, Phone, Email)</label>
+                        <div class="file-upload-wrapper">
+                            <input type="file" id="guestList" name="guestList" accept=".pdf,.doc,.docx,.xls,.xlsx">
+                            <div class="file-upload-display">
+                                <i class="upload-icon">📋</i>
+                                <span>Upload Guest List Document with Name, Phone number and email</span>
+                            </div>
+                        </div>
+                        <small class="hint">Required if you have guests. We will use this for invitation cards.</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2><span class="section-num">04</span> Payment Verification</h2>
                 <div class="input-group">
                     <label>Have you paid the graduation fee?</label>
                     <div class="radio-group-container">
@@ -106,8 +172,33 @@
                     </div>
                 </div>
 
+                <div id="paymentInstructions" class="conditional-section"
+                    style="display: none; background: #e3f2fd; border-left: 4px solid #2196F3; padding: 15px; margin-bottom: 20px;">
+                    <h3 style="color: #0d47a1; margin-top: 0; font-size: 1.1rem;">🎓 Payment Instructions</h3>
+                    <p style="margin: 5px 0;">Please proceed to pay the <strong>Kshs 7,000</strong> graduation fee via:
+                    </p>
+                    <ul style="margin: 10px 0 10px 20px;">
+                        <li><strong>Paybill:</strong> 700201</li>
+                        <li><strong>Account No:</strong> 6604000859</li>
+                    </ul>
+                    <p style="margin: 0; font-size: 0.9rem;">Once paid, return here to select 'Yes, I have paid' and
+                        upload your receipt.</p>
+                </div>
+
                 <div id="receiptSection" class="conditional-section" style="display: none;">
-                    <p class="section-hint">Please upload a scan or clear photo of your graduation fee payment receipt
+                    <div class="input-grid">
+                        <div class="input-group">
+                            <label for="paymentReference">Transaction Reference / M-Pesa Code</label>
+                            <input type="text" id="paymentReference" name="paymentReference"
+                                placeholder="e.g., QKH1234567">
+                        </div>
+                        <div class="input-group">
+                            <label for="paymentDate">Date of Payment</label>
+                            <input type="date" id="paymentDate" name="paymentDate">
+                        </div>
+                    </div>
+                    <p class="section-hint">Please upload a scan or clear photo of your graduation fee payment
+                        receipt
                         (PDF, JPG, or PNG).</p>
                     <div class="input-group">
                         <label for="paymentReceipt">Upload Payment Receipt</label>
